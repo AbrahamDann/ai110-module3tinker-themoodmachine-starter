@@ -7,6 +7,7 @@ to train a tiny text classifier on the same SAMPLE_POSTS and
 TRUE_LABELS that you use with the rule based model.
 """
 
+import os
 from typing import List, Tuple
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -131,8 +132,10 @@ if __name__ == "__main__":
     # Evaluate on the same dataset (training accuracy).
     evaluate_on_dataset(SAMPLE_POSTS, TRUE_LABELS, vectorizer, model)
 
-    # Let the user try their own examples.
-    run_interactive_loop(vectorizer, model)
+    if os.environ.get("MOOD_MACHINE_INTERACTIVE", "1") == "1":
+        run_interactive_loop(vectorizer, model)
+    else:
+        print("\nInteractive mode disabled (set MOOD_MACHINE_INTERACTIVE=1 to enable).")
 
     print("\nTip: Compare these predictions with the rule based model")
     print("by running `python main.py`. Notice where they fail in")

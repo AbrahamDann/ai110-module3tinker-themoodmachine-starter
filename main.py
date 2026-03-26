@@ -2,6 +2,7 @@
 Entry point for the Mood Machine rule based mood analyzer.
 """
 
+import os
 from typing import List
 
 from mood_analyzer import MoodAnalyzer
@@ -87,7 +88,10 @@ if __name__ == "__main__":
 
     run_batch_demo()
 
-    run_interactive_loop()
+    if os.environ.get("MOOD_MACHINE_INTERACTIVE", "1") == "1":
+        run_interactive_loop()
+    else:
+        print("\nInteractive mode disabled (set MOOD_MACHINE_INTERACTIVE=1 to enable).")
 
     print("\nTip: After you explore the rule based model here,")
     print("run `python ml_experiments.py` to try a simple ML based model")
